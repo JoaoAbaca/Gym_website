@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Contact Us</h1>
+
+<form method="post" style="margin: 20px 0; display: grid; gap: 15px; max-width: 500px">
+    {% csrf_token %}
+    
+    <div style="display: grid; gap: 5px">
+        <label>Name:</label>
+        {{ form.name }}
+    </div>
+    
+    <div style="display: grid; gap: 5px">
+        <label>Email:</label>
+        {{ form.email }}
+    </div>
+    
+    <div style="display: grid; gap: 5px">
+        <label>Phone (optional):</label>
+        {{ form.phone }}
+    </div>
+    
+    <div style="display: grid; gap: 5px">
+        <label>Message:</label>
+        {{ form.message }}
+    </div>
+    
+    <button type="submit" style="margin-top: 10px; padding: 8px">
+        Send Message
+    </button>
+</form>
+{% endblock %}

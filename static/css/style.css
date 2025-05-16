@@ -1,0 +1,137 @@
+/* Base Styles */
+:root {
+    --primary: #2c3e50;
+    --secondary: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+.main-header {
+    background-color: var(--primary);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo img {
+    height: 50px;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.7), 
+                url('../images/hero-bg.jpg') no-repeat center center/cover;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+/* Services Page Styles */
+.service-list {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.service-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.featured-tag {
+    background: #e74c3c;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* Detail Page Styles */
+.service-detail {
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: #e74c3c;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #2c3e50;
+}
+/* Improved button styles */
+.button {
+    display: inline-block;
+    background: #2c3e50;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.button:hover {
+    background: #e74c3c;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.service-card {
+    /* Add this to contain the button properly */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.service-card .button {
+    margin-top: auto; /* Pushes button to bottom */
+    align-self: flex-start;
+}
+
+/* Auth links styling */
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: auto; /* Pushes to right */
+}
+
+.welcome-msg {
+    color: white;
+    font-weight: 500;
+}
+
+.auth-link {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.auth-link:hover {
+    background: rgba(255,255,255,0.1);
+}

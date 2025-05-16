@@ -1,0 +1,39 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media
+/staticfiles
+.env
+.env.local
+
+### Docker ###
+**/.dockerignore
+**/.env
+**/.aws
+**/.ssh
+
+### IDE ###
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+
+### OS ###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+### Virtual Environment ###
+venv/
+ENV/
+env/

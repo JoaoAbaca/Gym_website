@@ -1,0 +1,7 @@
+{% for service in services %}
+<div class="service">
+  <h3>{{ service.name }}</h3>
+  <p>{{ service.duration }} • ${{ service.price }}</p>
+  {% if service.featured %}<span class="badge">FEATURED</span>{% endif %}
+</div>
+{% endfor %}

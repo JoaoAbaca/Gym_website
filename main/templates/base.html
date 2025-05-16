@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerFit Gym - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/utilities.css' %}">
+</head>
+<body>
+    {% include 'partials/_header.html' %}
+    
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    {% include 'partials/_footer.html' %}
+    
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

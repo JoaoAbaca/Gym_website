@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Our Trainers</h1>
+{% for trainer in trainers %}
+<div class="trainer">
+    <h3>{{ trainer.name }}</h3>
+    <p><strong>Specializes in:</strong> {{ trainer.specialization }}</p>
+    <p><strong>Experience:</strong> {{ trainer.years_experience }} years</p>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>My Bookings</h1>
+{% for booking in bookings %}
+<div class="booking">
+    <h3>{{ booking.class_schedule.service.name }}</h3>
+    <p>{{ booking.class_schedule.date }} at {{ booking.class_schedule.start_time }}</p>
+    <p>Trainer: {{ booking.class_schedule.trainer.name }}</p>
+</div>
+{% empty %}
+<p>You have no bookings yet.</p>
+{% endfor %}
+{% endblock %}

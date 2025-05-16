@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>About Our Gym</h1>
+
+<div style="margin-top: 30px">
+    <h2>Our Trainers</h2>
+    {% for trainer in trainers %}
+    <div style="margin: 20px 0; padding: 15px; border: 1px solid #eee">
+        <h3>{{ trainer.name }}</h3>
+        <p><strong>Specialty:</strong> {{ trainer.specialization }}</p>
+        <p>{{ trainer.bio }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

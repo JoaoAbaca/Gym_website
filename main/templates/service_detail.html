@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<article class="service-detail">
+    <h1>{{ service.name }}</h1>
+    <p class="price">${{ service.price }} <small>{{ service.duration }}</small></p>
+    <p>{{ service.description }}</p>
+    {% if service.featured %}<span class="featured-tag">Featured Class</span>{% endif %}
+    <a href="/services/" class="back-button">← All Classes</a>
+</article>
+{% endblock %}

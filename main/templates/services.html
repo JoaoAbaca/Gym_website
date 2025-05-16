@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="services">
+    <h1>Our Classes</h1>
+    <div class="service-list">
+        {% for service in services %}
+        <div class="service-card">
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.description }}</p>
+            <p><strong>{{ service.duration }}</strong> • ${{ service.price }}</p>
+            <a href="{{ service.get_absolute_url }}" class="button">
+                View {{ service.name|truncatechars:15 }} Details →
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

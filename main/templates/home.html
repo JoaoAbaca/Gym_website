@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Transform Your Body, Transform Your Life</h1>
+        <p>Join our community of fitness enthusiasts today</p>
+        <a href="{% url 'services' %}" class="btn btn-primary">View Our Services</a>
+    </div>
+</section>
+
+<section class="featured-classes">
+    <!-- Class listings will go here -->
+</section>
+{% endblock %}

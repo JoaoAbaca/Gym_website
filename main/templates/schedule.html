@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Class Schedule</h1>
+{% for class in classes %}
+<div class="class-card">
+    <h3>{{ class.service.name }}</h3>
+    <p>{{ class.date }} | {{ class.start_time }}-{{ class.end_time }}</p>
+    <p>Trainer: {{ class.trainer.name }}</p>
+    <p>Spots: {{ class.max_capacity }}</p>
+</div>
+{% endfor %}
+{% endblock %}
