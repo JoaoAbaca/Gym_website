@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os 
 from pathlib import Path
+from dotenv import load_dotenv
 
 AUTH_USER_MODEL = 'gym_auth.CustomUser'  # Add at top
 LOGIN_REDIRECT_URL = '/dashboard/'
@@ -24,7 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tp4*q6u23=%2yrk*pajw#64!iu_o+(0p0k-ewajy+j_rcahja^'
+# SECRET_KEY = 'django-insecure-tp4*q6u23=%2yrk*pajw#64!iu_o+(0p0k-ewajy+j_rcahja^'
+
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

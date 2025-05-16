@@ -78,9 +78,7 @@ def my_bookings(request):
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'bookings.html', {'bookings': bookings})
 
-
-
-
+@login_required  # Add this decorator
 def class_schedule(request):
-    classes = ClassSchedule.objects.all().order_by('date', 'start_time')
+    classes = ClassSchedule.objects.all()
     return render(request, 'schedule.html', {'classes': classes})
