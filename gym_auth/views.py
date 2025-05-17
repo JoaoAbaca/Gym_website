@@ -12,3 +12,9 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+@login_required
+def profile(request):
+    user_bookings = Booking.objects.filter(user=request.user)
+    return render(request, 'gym_auth/profile.html', {'bookings': user_bookings})

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome, {{ user.username }}</h2>
+<h3>Your Bookings</h3>
+<ul>
+  {% for booking in bookings %}
+  <li>
+    {{ booking.class_schedule.name }} - 
+    {{ booking.class_schedule.start_time|date:"M d, Y H:i" }}
+  </li>
+  {% empty %}
+  <li>No bookings yet!</li>
+  {% endfor %}
+</ul>
+{% endblock %}
