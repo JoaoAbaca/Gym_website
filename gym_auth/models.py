@@ -10,3 +10,18 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return self.email
+        # Add these to resolve conflicts:
+    groups = models.ManyToManyField(
+        'auth.Group',
+        verbose_name='groups',
+        blank=True,
+        related_name="customuser_groups",  # UNIQUE related name
+        related_query_name="user",
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        verbose_name='user permissions',
+        blank=True,
+        related_name="customuser_permissions",  # UNIQUE related name
+        related_query_name="user",
+    )
