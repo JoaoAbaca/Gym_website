@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from gym_auth import views as auth_views
 
 urlpatterns = [
     path('admin/dashboard/', include('main.urls_admin')),
@@ -22,4 +23,5 @@ urlpatterns = [
     path('', include('main.urls')),
     path('auth/', include('gym_auth.urls')),  # Updated path
     path('auth/', include('django.contrib.auth.urls')),  # Built-in auth    
+    path('profile/', auth_views.profile, name='profile'),
 ] 

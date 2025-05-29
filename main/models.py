@@ -84,3 +84,15 @@ class Booking(models.Model):
         if self.class_schedule.spots_remaining() <= 0:
             raise ValueError("This class is fully booked")
         super().save(*args, **kwargs)
+
+class Membership(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    booking_limit = models.PositiveIntegerField()
+    description = models.TextField()
+
+class UserMembership(models.Model):
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='membership')
+    membership = models.ForeignKey(Membership, on_delete=models.PROTECT)
+    start_date = models.DateField(auto_now_add=True)
+    end_date = models.DateField()

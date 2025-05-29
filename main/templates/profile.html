@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>My Profile</h1>
+    
+    <div class="profile-section">
+        <h2>Personal Information</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+    </div>
+    
+    <div class="bookings-section">
+        <h2>Upcoming Bookings</h2>
+        {% if bookings %}
+            <ul class="booking-list">
+                {% for booking in bookings %}
+                <li class="booking-item">
+                    <div class="booking-details">
+                        <h3>{{ booking.class_schedule.service.name }}</h3>
+                        <p><strong>Date:</strong> {{ booking.class_schedule.start_datetime|date:"M d, Y" }}</p>
+                        <p><strong>Time:</strong> {{ booking.class_schedule.start_datetime|time:"H:i" }} - {{ booking.class_schedule.end_datetime|time:"H:i" }}</p>
+                        <p><strong>Trainer:</strong> {{ booking.class_schedule.trainer.name }}</p>
+                    </div>
+                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger">Cancel Booking</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have no upcoming bookings.</p>
+        {% endif %}
+    </div>
+    
+    <div class="password-change-section">
+        <h2>Password Management</h2>
+        <a href="{% url 'password_change' %}" class="btn btn-secondary">Change Password</a>
+    </div>
+</div>
+{% endblock %}

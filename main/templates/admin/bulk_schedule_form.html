@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ title }}</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create Schedules</button>
+            <a href="{% url 'manage_schedules' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

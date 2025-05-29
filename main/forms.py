@@ -65,5 +65,10 @@ class BulkScheduleForm(forms.Form):
         widget=forms.CheckboxSelectMultiple
     )
     start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
-    duration = forms.DurationField(help_text="Duration in hours (e.g., 1.5 for 1 hour 30 minutes)")
-    max_capacity = forms.IntegerField(min_value=1)
+    duration = forms.IntegerField(
+        min_value=30,
+        max_value=180,
+        help_text="Duration in minutes",
+        initial=60
+    )
+    max_capacity = forms.IntegerField(min_value=1, initial=10)

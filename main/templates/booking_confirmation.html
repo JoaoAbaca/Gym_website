@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Confirmation</title>
+</head>
+<body>
+    <h2>Booking Confirmation</h2>
+    <p>Hello {{ user.first_name }},</p>
+    <p>Your booking for <strong>{{ schedule.service.name }}</strong> has been confirmed.</p>
+    
+    <h3>Class Details</h3>
+    <ul>
+        <li><strong>Date:</strong> {{ schedule.start_datetime|date:"F j, Y" }}</li>
+        <li><strong>Time:</strong> {{ schedule.start_datetime|time:"g:i A" }} - {{ schedule.end_datetime|time:"g:i A" }}</li>
+        <li><strong>Trainer:</strong> {{ schedule.trainer.name }}</li>
+        <li><strong>Location:</strong> PowerFit Gym Main Studio</li>
+    </ul>
+    
+    <p>You can manage your bookings on your profile page: 
+        <a href="http://{{ domain }}{% url 'profile' %}">View My Bookings</a>
+    </p>
+    
+    <p>Thank you for choosing PowerFit Gym!</p>
+    <p><strong>PowerFit Gym Team</strong></p>
+</body>
+</html>

@@ -1,16 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Service, Trainer, Testimonial, ClassSchedule, Booking
-from .forms import ContactForm  # We'll create this form next
 from django.utils import timezone
-from datetime import timedelta
+from datetime import datetime,timedelta
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import ContactForm, ClassScheduleForm 
+from .forms import ContactForm, ClassScheduleForm, BulkScheduleForm  
 from django.views.generic import ListView
-
+from django.http import HttpResponse
 
 def home(request):
     featured_services = Service.objects.filter(featured=True)
@@ -87,12 +86,17 @@ def schedule(request):
 @login_required
 def book_class(request, schedule_id):
     schedule = get_object_or_404(ClassSchedule, id=schedule_id)
-    
+    user = request.user
     # Check if class is available
-    if not schedule.is_available():
-        return render(request, 'booking_error.html', {
-            'error': 'This class is fully booked'
-        })
+    if user.membership:
+        current_month_bookings = Booking.objects.filter(
+            user=user,
+            booked_at__month=timezone.now().month
+        ).count()
+        
+        if current_month_bookings >= user.membership.membership.booking_limit:
+            messages.error(request, "You've reached your monthly booking limit")
+            return redirect('service_detail', service_id=schedule.service.id)
     
     # Check if user already booked this class
     if Booking.objects.filter(user=request.user, class_schedule=schedule).exists():
@@ -328,3 +332,46 @@ class ScheduleCalendarView(ListView):
         context['prev_year'] = prev_year
         
         return context
+
+from datetime import timedelta
+import datetime
+
+@staff_member_required
+def bulk_add_schedule(request):
+    if request.method == 'POST':
+        form = BulkScheduleForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            current_date = data['start_date']
+            
+            while current_date <= data['end_date']:
+                if current_date.weekday() in data['days_of_week']:
+                    start_datetime = datetime.combine(current_date, data['start_time'])
+                    end_datetime = start_datetime + timedelta(minutes=data['duration'])
+                    
+                    ClassSchedule.objects.create(
+                        service=data['service'],
+                        trainer=data['trainer'],
+                        start_datetime=start_datetime,
+                        end_datetime=end_datetime,
+                        max_capacity=data['max_capacity']
+                    )
+                current_date += timedelta(days=1)
+            
+            messages.success(request, "Schedules created successfully!")
+            return redirect('manage_schedules')
+
+@login_required
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    
+    # Check cancellation policy (24 hours notice)
+    time_until_class = booking.class_schedule.start_datetime - timezone.now()
+    
+    if time_until_class < timedelta(hours=24):
+        messages.error(request, "Cancellations must be made at least 24 hours in advance")
+        return redirect('my_bookings')
+    
+    booking.delete()
+    messages.success(request, "Booking canceled successfully")
+    return redirect('my_bookings')
