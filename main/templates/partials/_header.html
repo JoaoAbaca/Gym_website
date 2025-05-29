@@ -13,6 +13,8 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'my_bookings' %}">My Bookings</a>
                     <a href="{% url 'logout' %}">Logout</a>
+                    <a href="{% url 'schedule_calendar' %}">Class Calendar</a>
+                    <a href="{% url 'profile' %}">My Profile</a>
                 {% else %}
                     <a href="{% url 'login' %}">Login</a>
                     <a href="{% url 'signup' %}">Sign Up</a>
@@ -28,6 +30,7 @@
                         <a href="{% url 'admin:index' %}">Django Admin</a>
                     </div>
                 </li>
+                <a href="{% url 'bulk_add_schedule' %}">Bulk Add Classes</a>
                 {% endif %}
             </nav>
     </div>

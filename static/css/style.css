@@ -220,3 +220,93 @@ body {
     from { opacity: 0.95; }
     to { opacity: 0; }
 }
+/* Calendar Styles */
+.calendar {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.calendar-header > div {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.calendar-body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.calendar-day {
+    flex: 0 0 14.2857%; /* 7 days per week */
+    border: 1px solid #eee;
+    min-height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.day-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.class-time {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.class-name {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.class-trainer {
+    font-size: 0.9em;
+    color: #444;
+}
+
+.class-spots {
+    font-size: 0.9em;
+    margin: 5px 0;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.btn-book {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    font-size: 1.2em;
+}
+
+.no-classes {
+    padding: 20px;
+    text-align: center;
+    font-style: italic;
+    color: #777;
+    width: 100%;
+}

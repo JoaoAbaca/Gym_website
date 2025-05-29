@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import ContactForm, ClassScheduleForm 
+from django.views.generic import ListView
 
 
 def home(request):
@@ -272,3 +273,58 @@ def edit_schedule(request, schedule_id):
         'form': form,
         'title': 'Edit Class Schedule'
     })
+
+class ScheduleCalendarView(ListView):
+    model = ClassSchedule
+    template_name = 'schedule_calendar.html'
+    context_object_name = 'schedules'
+    
+    def get_queryset(self):
+        # Get month/year from query parameters
+        month = int(self.request.GET.get('month', timezone.now().month))
+        year = int(self.request.GET.get('year', timezone.now().year))
+        
+        # Calculate start and end of month
+        start_date = datetime(year, month, 1)
+        if month == 12:
+            end_date = datetime(year+1, 1, 1)
+        else:
+            end_date = datetime(year, month+1, 1)
+            
+        return ClassSchedule.objects.filter(
+            start_datetime__gte=start_date,
+            start_datetime__lt=end_date
+        ).order_by('start_datetime')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Get current month/year
+        month = int(self.request.GET.get('month', timezone.now().month))
+        year = int(self.request.GET.get('year', timezone.now().year))
+        
+        # Calculate next/previous months
+        if month == 12:
+            next_month = 1
+            next_year = year + 1
+        else:
+            next_month = month + 1
+            next_year = year
+            
+        if month == 1:
+            prev_month = 12
+            prev_year = year - 1
+        else:
+            prev_month = month - 1
+            prev_year = year
+        
+        # Add to context
+        context['current_month'] = month
+        context['current_year'] = year
+        context['month_name'] = datetime(year, month, 1).strftime('%B')
+        context['next_month'] = next_month
+        context['next_year'] = next_year
+        context['prev_month'] = prev_month
+        context['prev_year'] = prev_year
+        
+        return context

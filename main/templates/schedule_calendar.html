@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Class Calendar: {{ month_name }} {{ current_year }}</h1>
+    
+    <div class="calendar-nav">
+        <a href="?month={{ prev_month }}&year={{ prev_year }}">&larr; Previous Month</a>
+        <span>{{ month_name }} {{ current_year }}</span>
+        <a href="?month={{ next_month }}&year={{ next_year }}">Next Month &rarr;</a>
+    </div>
+    
+    <div class="calendar">
+        <div class="calendar-header">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+        
+        <div class="calendar-body">
+            {% for schedule in schedules %}
+            <div class="calendar-day">
+                <div class="day-header">
+                    {{ schedule.start_datetime|date:"D" }}<br>
+                    {{ schedule.start_datetime|date:"M j" }}
+                </div>
+                <div class="day-content">
+                    <div class="class-time">
+                        {{ schedule.start_datetime|time:"H:i" }} - {{ schedule.end_datetime|time:"H:i" }}
+                    </div>
+                    <div class="class-name">
+                        {{ schedule.service.name }}
+                    </div>
+                    <div class="class-trainer">
+                        with {{ schedule.trainer.name }}
+                    </div>
+                    <div class="class-spots">
+                        {{ schedule.spots_remaining }} spots left
+                    </div>
+                    <a href="{% url 'service_detail' schedule.service.id %}" class="btn-book">Book</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-classes">
+                No classes scheduled for this month
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

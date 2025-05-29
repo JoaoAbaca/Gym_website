@@ -8,4 +8,5 @@ urlpatterns = [
     path('edit-schedule/<int:schedule_id>/', views.edit_schedule, name='edit_schedule'),
     path('delete-schedule/<int:schedule_id>/', views.delete_schedule, name='delete_schedule'),
     path('view-bookings/<int:schedule_id>/', views.view_bookings, name='view_bookings'),
+    path('bulk-add-schedule/', views.bulk_add_schedule, name='bulk_add_schedule'),
 ]

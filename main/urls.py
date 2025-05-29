@@ -10,4 +10,7 @@ urlpatterns = [
     path('book/<int:schedule_id>/', views.book_class, name='book_class'),
     path('my-bookings/', views.my_bookings, name='my_bookings'),
     path('cancel-booking/<int:booking_id>/', views.cancel_booking, name='cancel_booking'),
+    path('schedule/calendar/', views.ScheduleCalendarView.as_view(), name='schedule_calendar'),
+    path('profile/', views.profile, name='profile'),
+    path('admin/bulk-add-schedule/', views.bulk_add_schedule, name='bulk_add_schedule'),
 ]

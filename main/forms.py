@@ -1,7 +1,7 @@
 # main/forms.py
 
 from django import forms
-from .models import ClassSchedule
+from .models import ClassSchedule, Service, Trainer
 from django.utils import timezone
 
 
@@ -46,3 +46,24 @@ class ClassScheduleForm(forms.ModelForm):
                 self.add_error('end_datetime', "End time must be after start time")
         
         return cleaned_data
+    
+class BulkScheduleForm(forms.Form):
+    service = forms.ModelChoiceField(queryset=Service.objects.all())
+    trainer = forms.ModelChoiceField(queryset=Trainer.objects.all())
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    days_of_week = forms.MultipleChoiceField(
+        choices=[
+            (0, 'Monday'),
+            (1, 'Tuesday'),
+            (2, 'Wednesday'),
+            (3, 'Thursday'),
+            (4, 'Friday'),
+            (5, 'Saturday'),
+            (6, 'Sunday'),
+        ],
+        widget=forms.CheckboxSelectMultiple
+    )
+    start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+    duration = forms.DurationField(help_text="Duration in hours (e.g., 1.5 for 1 hour 30 minutes)")
+    max_capacity = forms.IntegerField(min_value=1)
