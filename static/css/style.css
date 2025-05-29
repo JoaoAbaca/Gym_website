@@ -135,3 +135,88 @@ body {
 .auth-link:hover {
     background: rgba(255,255,255,0.1);
 }
+/* ===== Message System ===== */
+.messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 300px;
+}
+
+.alert {
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0.95;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.3s, fadeOut 0.5s 4s forwards;
+}
+
+.alert:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+}
+
+.alert-success {
+    background-color: #f0fff4;
+    color: #2f855a;
+    border-left: 5px solid #38a169;
+}
+
+.alert-error {
+    background-color: #fff5f5;
+    color: #c53030;
+    border-left: 5px solid #e53e3e;
+}
+
+.alert-warning {
+    background-color: #fffaf0;
+    color: #c05621;
+    border-left: 5px solid #ed8936;
+}
+
+.alert-info {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+    border-left: 5px solid #4299e1;
+}
+
+.close-message {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.close-message:hover {
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateX(20px);
+    }
+    to { 
+        opacity: 0.95; 
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    from { opacity: 0.95; }
+    to { opacity: 0; }
+}

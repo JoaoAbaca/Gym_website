@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Message Sent</h1>
-<p>Thank you for contacting us. We'll respond soon.</p>
-<a href="/">← Return Home</a>
+<div class="container">
+    <h2>Message Sent Successfully!</h2>
+    <p>Thank you for contacting us. We'll get back to you soon.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary">Return Home</a>
+</div>
 {% endblock %}

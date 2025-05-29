@@ -1,27 +1,40 @@
-from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.exceptions import ValidationError
+import re
+
+def validate_id_number(value):
+    """Validate that the ID number is numeric and 8-12 digits long"""
+    if not re.match(r'^\d{8,12}$', value):
+        raise ValidationError(
+            'ID number must be 8-12 digits long and contain only numbers.'
+        )
 
 class CustomUser(AbstractUser):
-    phone = models.CharField(max_length=20, blank=True)
-    membership_type = models.CharField(max_length=50, blank=True)
+
+    username = models.CharField(
+        max_length=12,
+        unique=True,
+        validators=[validate_id_number],
+        verbose_name='ID Number',
+        help_text='Required. 8-12 digits only.'
+    )
+    
+
+    email = models.EmailField(blank=True, null=True)
+    
+
+    first_name = models.CharField(max_length=30, blank=False)
+    last_name = models.CharField(max_length=150, blank=False)
+    date_of_birth = models.DateField(null=True, blank=True)
+    
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
     
     def __str__(self):
-        return self.email
-        # Add these to resolve conflicts:
-    groups = models.ManyToManyField(
-        'auth.Group',
-        verbose_name='groups',
-        blank=True,
-        related_name="customuser_groups",  # UNIQUE related name
-        related_query_name="user",
-    )
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        verbose_name='user permissions',
-        blank=True,
-        related_name="customuser_permissions",  # UNIQUE related name
-        related_query_name="user",
-    )
+        return f"{self.first_name} {self.last_name} ({self.username})"
+    
+    def clean(self):
+        super().clean()
+        validate_id_number(self.username)

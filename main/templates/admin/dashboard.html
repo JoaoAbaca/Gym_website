@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    
+    <div class="admin-section">
+        <h2>Upcoming Classes</h2>
+        {% if upcoming_classes %}
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Trainer</th>
+                    <th>Date & Time</th>
+                    <th>Capacity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for class in upcoming_classes %}
+                <tr>
+                    <td>{{ class.service.name }}</td>
+                    <td>{{ class.trainer.name }}</td>
+                    <td>{{ class.start_datetime|date:"M d, Y H:i" }}</td>
+                    <td>{{ class.bookings.count }}/{{ class.max_capacity }}</td>
+                    <td>
+                        <a href="{% url 'edit_schedule' class.id %}">Edit</a>
+                        <a href="{% url 'view_bookings' class.id %}">Bookings</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No upcoming classes scheduled.</p>
+        {% endif %}
+        <a href="{% url 'manage_schedules' %}" class="btn">Manage All Schedules</a>
+    </div>
+    
+    <div class="admin-section">
+        <h2>Recent Bookings</h2>
+        {% if recent_bookings %}
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Class</th>
+                    <th>Booked At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in recent_bookings %}
+                <tr>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.user.email }}</td>
+                    <td>{{ booking.class_schedule.service.name }} - {{ booking.class_schedule.start_datetime|date:"M d" }}</td>
+                    <td>{{ booking.booked_at|date:"M d, H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No recent bookings.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

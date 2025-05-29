@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Bookings for {{ schedule.service.name }}</h1>
+    
+    <div class="schedule-info">
+        <p><strong>Trainer:</strong> {{ schedule.trainer.name }}</p>
+        <p><strong>Date:</strong> {{ schedule.start_datetime|date:"M d, Y" }}</p>
+        <p><strong>Time:</strong> {{ schedule.start_datetime|time:"H:i" }} - {{ schedule.end_datetime|time:"H:i" }}</p>
+        <p><strong>Capacity:</strong> {{ bookings|length }}/{{ schedule.max_capacity }}</p>
+    </div>
+    
+    <h2>Bookings</h2>
+    
+    {% if bookings %}
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>ID Number</th>
+                    <th>Booked At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>
+                        {% if booking.user.first_name or booking.user.last_name %}
+                            {{ booking.user.first_name }} {{ booking.user.last_name }}
+                        {% else %}
+                            {{ booking.user.username }}
+                        {% endif %}
+                    </td>
+                    <td>{{ booking.user.email|default:"-" }}</td>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.booked_at|date:"M d, Y H:i" }}</td>
+                    <td class="actions">
+                        <a href="mailto:{{ booking.user.email }}">Email</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No bookings for this class yet.</p>
+    {% endif %}
+    
+    <div class="back-link">
+        <a href="{% url 'manage_schedules' %}" class="btn btn-secondary">Back to Schedules</a>
+    </div>
+</div>
+{% endblock %}
